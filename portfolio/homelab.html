@@ -55,6 +55,7 @@
     <div class="pilier"><h3>Périmètre</h3><p>pfSense virtualisé, refus par défaut, IPS Snort en blocage sur le WAN, pfBlockerNG.</p></div>
     <div class="pilier"><h3>Segmentation</h3><p>Cloud exposé isolé dans sa propre zone, stockage sur une interface physique dédiée.</p></div>
     <div class="pilier"><h3>Accès distant</h3><p>VPN WireGuard ; consoles d'administration jamais exposées (reverse proxy TLS + listes d'accès).</p></div>
+    <div class="pilier"><h3>DNS et TLS</h3><p>DNS local split-horizon avec DNSSEC ; certificats Let's Encrypt ECDSA, wildcard par challenge DNS.</p></div>
     <div class="pilier"><h3>Supervision</h3><p>Prometheus, Grafana et Loki ; alertes rédigées en français, envoyées sur téléphone.</p></div>
     <div class="pilier"><h3>Sauvegardes</h3><p>Proxmox Backup Server : 2 copies, vérification hebdomadaire, restauration testée.</p></div>
   </div>

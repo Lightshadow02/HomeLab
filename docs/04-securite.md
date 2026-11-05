@@ -67,6 +67,23 @@ Correctif : déblocage, puis **suppression ciblée de cette seule règle**, sans
 
 ![Tableau de bord pfBlockerNG (24 h)](../assets/grafana-pfblockerng.png)
 
+## Certificats TLS : Let's Encrypt
+
+Tout le trafic web passe en **HTTPS**, avec des certificats **Let's Encrypt** gérés par Nginx Proxy Manager et **renouvelés automatiquement** :
+
+| Usage | Type de certificat | Validation ACME | Pourquoi |
+|---|---|---|---|
+| **Consoles internes** (14 hôtes) | Un **wildcard** `*.exemple.fr` | **DNS-01** via l'API du fournisseur DNS | Aucun besoin d'exposer le service ni de publier son nom : la preuve se fait par un enregistrement DNS temporaire |
+| **Services publics** (7 hôtes) | Un certificat **par nom** | **HTTP-01** (webroot) | Simple, le service est déjà joignable en HTTPS |
+
+Paramètres communs à tous les hôtes :
+- clés **ECDSA P-384** (plus courtes et plus robustes que RSA 2048) ;
+- **redirection forcée HTTP → HTTPS** sur les 21 hôtes ;
+- option **« Block common exploits »** de Nginx Proxy Manager activée sur les 21 hôtes ;
+- **HSTS** activé sur le cloud (Nextcloud).
+
+Intérêt du wildcard pour la discrétion : les journaux publics de *Certificate Transparency* ne contiennent que `*.exemple.fr`, et non la liste des consoles d'administration.
+
 ## Accès distant : WireGuard
 
 - **wg-easy v15** (WireGuard), dans le conteneur qui héberge aussi le reverse proxy.

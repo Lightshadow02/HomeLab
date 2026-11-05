@@ -22,6 +22,7 @@ Il héberge aujourd'hui des services utilisés au quotidien (cloud privé, visio
 - **Périmètre** : pfSense virtualisé, refus par défaut, IPS **Snort** en blocage sur le WAN, **pfBlockerNG** (≈ 352 000 domaines malveillants ou publicitaires bloqués).
 - **Segmentation** : le cloud exposé est isolé dans sa propre zone, et le stockage est sur une interface physique dédiée.
 - **Accès** : VPN **WireGuard**. Les consoles d'administration ne sont jamais exposées : reverse proxy TLS et listes d'accès.
+- **DNS et TLS** : DNS local *split-horizon* avec validation DNSSEC (les consoles internes n'existent pas dans le DNS public), certificats **Let's Encrypt** ECDSA, avec un wildcard obtenu par challenge DNS.
 - **Supervision** : Prometheus, Grafana et Loki. Les journaux du pare-feu sont centralisés, et les alertes, rédigées en français, arrivent sur téléphone.
 - **Sauvegardes** : Proxmox Backup Server, avec 2 copies, une vérification hebdomadaire et une restauration testée.
 

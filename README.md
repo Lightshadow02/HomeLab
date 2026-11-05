@@ -137,7 +137,8 @@ avec une **liste d'accès** `LAN + VPN` puis `deny all` : elles ont un nom DNS m
 | Réputation / DNS | **pfBlockerNG** : listes IP mises à jour quotidiennement + **DNSBL ~352 000 domaines** (publicité, malware, phishing : HaGeZi TIF, Phishing Army, URLhaus) en mode Python |
 | Segmentation | Cloud exposé (Nextcloud) **isolé dans sa propre zone**, stockage sur une **interface physique dédiée** non routée |
 | Accès distant | **WireGuard** (5 pairs) ; aucune interface d'admin exposée en direct |
-| Publication | Reverse proxy **TLS Let's Encrypt** ; listes d'accès LAN/VPN sur toutes les consoles d'admin |
+| Publication | Reverse proxy **TLS Let's Encrypt** (ECDSA P-384, renouvellement auto) : certificat **wildcard par challenge DNS** pour les consoles internes, HTTPS forcé partout ; listes d'accès LAN/VPN |
+| DNS | **DNS local split-horizon** (Unbound) : les consoles internes n'existent pas dans le DNS public ; résolution récursive avec **validation DNSSEC** |
 | Isolation | **LXC non privilégiés** partout ; montages NAS en **lecture seule** pour les services qui n'ont besoin que de lire |
 | Applicatif | Nextcloud : antivirus **ClamAV**, Redis pour le verrouillage, base MariaDB non exposée (réseau Docker interne) |
 | Journalisation | Logs pfSense / Snort / pfBlockerNG → **Loki**, tableaux de bord et alertes Grafana |

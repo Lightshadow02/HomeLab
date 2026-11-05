@@ -76,11 +76,35 @@ Tout le reste est **refusé par défaut**. Le détail des règles est volontaire
 Les consoles d'administration ont donc un nom DNS et un certificat valide, mais **ne répondent pas depuis Internet**.
 En interne, des **substitutions DNS** dans Unbound (pfSense) font pointer ces noms directement vers le reverse proxy.
 
-## DNS
+## DNS local (split-horizon)
 
-- **Unbound** (pfSense) est le résolveur de toutes les zones.
-- **pfBlockerNG DNSBL**, en mode Python, filtre environ 352 000 domaines (publicité, malware, phishing).
-- Des substitutions locales (host overrides) servent les services internes.
+Tous les services du lab ont un **nom de domaine**, mais il existe **deux vues du DNS** :
+
+| Nom | Vu depuis Internet (DNS public) | Vu depuis le LAN ou le VPN (DNS local) |
+|---|---|---|
+| Services publics (`cloud`, `jelly`, …) | Adresse publique → box → pfSense → reverse proxy | Résolu localement |
+| **Consoles internes** (`proxmox`, `pbs`, `grafana`, `wg`, `bureau`, …) | **N'existe pas** : aucun enregistrement public | Adresse **privée du reverse proxy** |
+
+```mermaid
+flowchart LR
+    C["Poste LAN<br/>ou client VPN"] -->|"grafana.exemple.fr ?"| U["Unbound (pfSense)<br/>substitution locale"]
+    U -->|"192.168.1.101"| C
+    C -->|"HTTPS, certificat wildcard valide"| N["Reverse proxy"]
+    N -->|"liste d'accès LAN/VPN : OK"| G["Grafana"]
+    I["Internet"] -.->|"grafana.exemple.fr ?"| P["DNS public"]
+    P -.->|"NXDOMAIN : le nom n'existe pas"| I
+```
+
+Comment c'est fait :
+- **Unbound** (pfSense) est le résolveur unique de toutes les zones, et du VPN. Il fonctionne en **résolution récursive complète** (sans redirection vers un DNS tiers), avec **validation DNSSEC**.
+  Vérification : les réponses signées portent le drapeau `ad`, et un domaine volontairement mal signé est refusé (`SERVFAIL`).
+- **15 substitutions d'hôtes** (*host overrides*) font pointer chaque console interne vers l'adresse privée du reverse proxy.
+- **pfBlockerNG DNSBL**, en mode Python, filtre environ 352 000 domaines (publicité, malware, phishing) **pour tous les clients**, y compris le bureau à distance et les clients VPN.
+
+Pourquoi c'est intéressant pour la sécurité :
+- **Pas de fuite d'information** : un attaquant qui énumère les sous-domaines publics (DNS, journaux de transparence des certificats) ne voit **pas** les consoles d'administration, puisqu'elles sont couvertes par un certificat wildcard et absentes du DNS public.
+- **Double barrière** : même si quelqu'un devinait un nom interne et forçait la résolution, la **liste d'accès** du reverse proxy refuse toute adresse hors LAN et VPN.
+- **Confort** : des URL lisibles et des certificats valides partout, sans avertissement du navigateur ni adresse IP à retenir.
 
 ## Interfaces réservées
 

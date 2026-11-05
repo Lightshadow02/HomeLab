@@ -51,6 +51,10 @@
       "texte": "VPN WireGuard ; consoles d'admin jamais exposées (reverse proxy TLS + listes d'accès)."
     },
     {
+      "titre": "DNS et TLS",
+      "texte": "DNS local split-horizon avec DNSSEC ; certificats Let's Encrypt ECDSA, wildcard par challenge DNS."
+    },
+    {
       "titre": "Supervision",
       "texte": "Prometheus, Grafana, Loki ; alertes en français sur téléphone."
     },
