@@ -13,6 +13,10 @@ flowchart LR
     D1 & D2 -->|"échec / avertissement"| N["🔔 ntfy"]
 ```
 
+![Grille des sauvegardes sur 30 jours](../assets/pbs-sauvegardes.png)
+
+*Widget du tableau de bord : une ligne par machine, une case par jour (vert = OK, bleu = avertissement, rouge = erreur). Le PBS a été mis en service début novembre 2026, d'où les cases grises.*
+
 ## Planning
 
 | Heure | Tâche | Détail |

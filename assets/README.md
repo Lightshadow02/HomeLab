@@ -2,6 +2,10 @@
 
 [← Retour au README](../README.md)
 
-Emplacement prévu pour les captures d'écran (tableaux de bord Grafana et Homarr, interface Proxmox), **floutées avant publication** : noms de domaine, adresses IP publiques et noms d'utilisateurs.
+| Image | Contenu |
+|---|---|
+| [grafana-hote.png](grafana-hote.png) | Supervision de l'hôte Proxmox (CPU, mémoire, températures, stockages) sur 24 h |
+| [grafana-pfblockerng.png](grafana-pfblockerng.png) | pfBlockerNG : IP bloquées, domaines bloqués, blocages par liste de réputation |
+| [pbs-sauvegardes.png](pbs-sauvegardes.png) | Grille des sauvegardes PBS sur 30 jours |
 
-*Aucune capture n'est encore publiée.*
+Les captures sont faites panneau par panneau. Les panneaux qui affichent des IP, des domaines consultés, des noms d'utilisateurs ou des machines non documentées ne sont **jamais** capturés.

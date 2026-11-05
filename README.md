@@ -143,6 +143,8 @@ avec une **liste d'accès** `LAN + VPN` puis `deny all` : elles ont un nom DNS m
 | Journalisation | Logs pfSense / Snort / pfBlockerNG → **Loki**, tableaux de bord et alertes Grafana |
 | Réaction | Gestion d'une faille PHP critique (oct. 2026) : correctifs appliqués après **répétition sur un clone** de la production |
 
+![pfBlockerNG : IP malveillantes et domaines bloqués sur 24 h](assets/grafana-pfblockerng.png)
+
 Détails, modèle de menace et durcissement : [docs/04-securite.md](docs/04-securite.md).
 
 ---
@@ -164,6 +166,8 @@ Rétention           7 quotidiennes · 4 hebdomadaires · 6 mensuelles
 - **Test de restauration réalisé** : restauration complète d'un conteneur sous un nouvel ID, vérification, puis suppression.
 - Le serveur PBS est lui-même sauvegardé à part, chaque semaine, sur le disque local.
 
+![Grille des sauvegardes PBS sur 30 jours](assets/pbs-sauvegardes.png)
+
 Détails : [docs/06-sauvegardes.md](docs/06-sauvegardes.md).
 
 ---
@@ -175,6 +179,8 @@ Détails : [docs/06-sauvegardes.md](docs/06-sauvegardes.md).
 - **Alertes rédigées en français**, avec résumé, cause probable et action à mener, envoyées sur téléphone via **ntfy**.
 - Canal séparé pour les **mises à jour** Proxmox et Docker.
 - Tableau de bord Homarr avec une **grille des sauvegardes sur 30 jours**, « façon GitHub ».
+
+![Supervision de l'hôte Proxmox dans Grafana](assets/grafana-hote.png)
 
 Projet associé : **[baszel-snmp-bridge](https://github.com/Lightshadow02/baszel-snmp-bridge)**, un pont SNMP que j'ai développé pour remonter les équipements réseau dans Beszel, l'outil de supervision utilisé avant la pile Prometheus/Grafana.
 

@@ -38,6 +38,9 @@ Tout tourne en Docker sur le CT 102 (voir [configs/monitoring/](../configs/monit
 
 ## Tableaux de bord Grafana
 
+![Hôte Proxmox dans Grafana](../assets/grafana-hote.png)
+
+
 - **Vue d'ensemble du lab**, utilisée aussi comme page d'accueil et intégrée dans Homarr.
 - **Proxmox** : invités et ressources.
 - **Hôte** (Node Exporter Full).

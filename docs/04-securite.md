@@ -60,6 +60,8 @@ Correctif : déblocage, puis **suppression ciblée de cette seule règle**, sans
 | Catégories | Publicité / pistage + groupe **Malware & Phishing** (HaGeZi Threat Intelligence, Phishing Army, URLhaus) |
 | Journalisation | Logs pfBlockerNG transférés vers Loki → tableau de bord Grafana dédié |
 
+![Tableau de bord pfBlockerNG (24 h)](../assets/grafana-pfblockerng.png)
+
 ## Accès distant : WireGuard
 
 - **wg-easy v15** (WireGuard), dans le conteneur qui héberge aussi le reverse proxy.
