@@ -1,0 +1,24 @@
+# Bureau KDE Plasma accessible par navigateur (LAN / VPN uniquement, via https://bureau.exemple.fr)
+services:
+  bureau:
+    image: lscr.io/linuxserver/webtop:ubuntu-kde
+    container_name: bureau
+    security_opt:
+      - seccomp:unconfined
+    env_file: ./.env
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+      - LC_ALL=fr_FR.UTF-8
+      - TITLE=Bureau Homelab
+      - DOCKER_MODS=linuxserver/mods:universal-package-install
+      - INSTALL_PACKAGES=remmina|remmina-plugin-rdp|remmina-plugin-vnc|remmina-plugin-secret|openssh-client|dolphin|konsole
+    volumes:
+      - ./config:/config
+    ports:
+      - "3001:3001"
+    shm_size: "1gb"
+    dns:
+      - 192.168.1.254
+    restart: unless-stopped

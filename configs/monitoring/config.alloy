@@ -1,0 +1,35 @@
+// Reçoit les logs syslog de pfSense (UDP/TCP 1514) et les envoie à Loki.
+loki.source.syslog "pfsense" {
+  listener {
+    address                = "0.0.0.0:1514"
+    protocol               = "udp"
+    syslog_format          = "rfc3164"
+    use_incoming_timestamp = false
+    labels                 = { job = "pfsense" }
+  }
+  listener {
+    address                = "0.0.0.0:1514"
+    protocol               = "tcp"
+    syslog_format          = "rfc3164"
+    use_incoming_timestamp = false
+    labels                 = { job = "pfsense" }
+  }
+  relabel_rules = loki.relabel.pf.rules
+  forward_to    = [loki.write.local.receiver]
+}
+loki.relabel "pf" {
+  forward_to = []
+  rule {
+    source_labels = ["__syslog_message_app_name"]
+    target_label  = "app"
+  }
+  rule {
+    source_labels = ["__syslog_message_severity"]
+    target_label  = "level"
+  }
+}
+loki.write "local" {
+  endpoint {
+    url = "http://loki:3100/loki/api/v1/push"
+  }
+}

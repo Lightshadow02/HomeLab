@@ -1,0 +1,78 @@
+# /etc/network/interfaces de l hôte Proxmox (extrait nettoyé)
+# vmbr0 = WAN vers la box · vmbr1 = LAN virtuel · vmbr200 = zone Cloud isolée · vmbr999 = stockage (NAS)
+# vmbr20/40/41 : réservés, non utilisés
+
+auto lo
+iface lo inet loopback
+
+auto nic0
+iface nic0 inet manual
+
+auto nic1
+iface nic1 inet manual
+
+auto nic2
+iface nic2 inet manual
+
+auto nic3
+iface nic3 inet manual
+
+auto enx8ae540347d60
+iface enx8ae540347d60 inet manual
+
+iface enx36ee05ac30fd inet manual
+
+iface enx96a2a0e31a71 inet manual
+
+auto vmbr0
+iface vmbr0 inet static
+	address 10.255.255.252/24
+	gateway 10.255.255.254
+	bridge-ports nic0
+	bridge-stp off
+	bridge-fd 0
+	post-up ip route add 192.168.1.1/32 via 10.255.255.253
+	post-down ip route del 192.168.1.1/32 via 10.255.255.253
+
+auto vmbr1
+iface vmbr1 inet manual
+	bridge-ports none
+	bridge-stp off
+	bridge-fd 0
+#LAN
+
+auto vmbr200
+iface vmbr200 inet manual
+	bridge-ports none
+	bridge-stp off
+	bridge-fd 0
+
+auto vmbr999
+iface vmbr999 inet static
+	address 192.168.70.10/24
+	bridge-ports nic1
+	bridge-stp off
+	bridge-fd 0
+#SORTIE .70
+
+auto vmbr20
+iface vmbr20 inet manual
+	bridge-ports none
+	bridge-stp off
+	bridge-fd 0
+
+auto vmbr40
+iface vmbr40 inet manual
+	bridge-ports none
+	bridge-stp off
+	bridge-fd 0
+#IRON-LAN
+
+auto vmbr41
+iface vmbr41 inet manual
+	bridge-ports none
+	bridge-stp off
+	bridge-fd 0
+#IRON-LAN2
+
+source /etc/network/interfaces.d/*

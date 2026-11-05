@@ -1,0 +1,46 @@
+services:
+  db:
+    image: mariadb:10.11
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=<REDACTED>
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD=<REDACTED>
+    volumes:
+      - db:/var/lib/mysql
+  clamav:
+    image: clamav/clamav:stable_base
+    restart: unless-stopped
+    volumes:
+      - /var/docker/clamav/virus_db/:/var/lib/clamav/
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+
+  app:
+    image: nextcloud:34-apache
+    restart: unless-stopped
+    depends_on:
+      - db
+      - redis
+    # IMPORTANT: écoute seulement en local => aucun port exposé sur le LAN/WAN
+    ports:
+      - "10.0.0.100:8080:80"
+    environment:
+      - PHP_OPCACHE_MEMORY_CONSUMPTION=256
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD=<REDACTED>
+    volumes:
+      - nextcloud:/var/www/html
+      - /opt/nextcloud/config:/var/www/html/config
+      - /opt/nextcloud/custom_apps:/var/www/html/custom_apps
+      - /opt/nextcloud/themes:/var/www/html/themes
+      - /mnt/nextcloud-data:/var/www/html/data
+
+volumes:
+  db:
+  nextcloud:

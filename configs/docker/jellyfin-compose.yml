@@ -1,0 +1,20 @@
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=1000              # UID de l'utilisateur qui fera tourner Jellyfin
+      - PGID=1000              # GID correspondant
+      - TZ=Europe/Paris
+    volumes:
+      - /opt/jellyfin/config:/config
+      - /opt/jellyfin/cache:/cache
+      - /mnt/media/anime:/media/anime:ro
+      - /mnt/media/film:/media/film:ro
+      - /mnt/media/serie:/media/serie:ro
+    ports:
+      - "8096:8096"            # HTTP
+      # - "8920:8920"          # HTTPS (si tu fournis un cert dans /config/ssl)
+#    devices:
+#      - /dev/dri:/dev/dri      # Accélération matérielle VAAPI (Intel/AMD) si dispo
+    restart: unless-stopped

@@ -1,0 +1,8 @@
+# Ne jamais versionner de secrets ni de fichiers de travail
+.env
+*.env
+secrets/
+*.key
+*.pem
+*.raw
+inventaire-*.txt

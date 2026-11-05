@@ -1,0 +1,9 @@
+# Extrait de /etc/fstab : montages NFS sur le réseau de stockage (VLAN70)
+# .200 = Buffalo TeraStation (NFS v3) · .148 = NAS médias (NFS v4.1)
+# Dernière ligne : image ext4 sur le NAS, montée en loop pour le datastore PBS (voir docs/06-sauvegardes.md)
+192.168.70.200:/mnt/array1/PROXMOX-LABO-BACKUP /mnt/LABO-BACKUP nfs vers=3,proto=tcp,hard,timeo=600,_netdev,nofail,x-systemd.automount,x-systemd.mount-timeout=30 0 0
+192.168.70.148:/mnt/nas/FILM   /mnt/nas-media/film   nfs  nfsvers=4.1,_netdev,noatime,nofail,hard,timeo=600  0  0
+192.168.70.148:/mnt/nas/serie  /mnt/nas-media/serie  nfs  nfsvers=4.1,_netdev,noatime,nofail,hard,timeo=600  0  0
+192.168.70.148:/mnt/nas/anime  /mnt/nas-media/anime  nfs  nfsvers=4.1,_netdev,noatime,nofail,hard,timeo=600  0  0
+192.168.70.200:/mnt/array1/NEXT-CLOUD /mnt/nextcloud-data nfs vers=3,proto=tcp,hard,timeo=600,noatime,nodiratime,_netdev,nofail 0 0
+/mnt/LABO-BACKUP/PBS-DISK/pbs-datastore.raw /mnt/pbs-datastore ext4 loop,_netdev,nofail,x-systemd.requires-mounts-for=/mnt/LABO-BACKUP 0 0
