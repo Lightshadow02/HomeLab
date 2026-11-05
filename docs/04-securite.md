@@ -36,7 +36,12 @@ Le virtualiser permet de le sauvegarder et de le restaurer comme n'importe quell
 | Durée de blocage | 1 heure, puis levée automatique |
 | Jeux de règles | **Snort Community** + **Emerging Threats Open** |
 | Politique IPS | « Security » (la plus stricte des politiques Snort) |
-| Faux positifs | Gérés par une **liste de suppression** par SID |
+| Faux positifs | Gérés par une **liste de suppression** par SID, limitée si possible à une source précise |
+
+### Réduction du bruit
+
+Une partie des alertes venait… de pfSense lui-même : les connexions SSH d'administration vers l'hyperviseur, et les refus que l'IPBX renvoie aux scanners SIP.
+Ces deux signatures sont supprimées **uniquement quand la source est l'IP WAN de pfSense**. Un attaquant externe qui les déclenche reste détecté et bloqué.
 
 ### Choix assumé : pas de Snort sur le LAN
 

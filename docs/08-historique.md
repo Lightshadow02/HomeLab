@@ -58,6 +58,13 @@ J'ai appris à garder un **accès console de secours** (clavier virtuel et captu
 **Leçon :** une démarche structurée (inventaire, priorisation, répétition sur un clone, sauvegarde, tests avant/après) a évité une régression :
 la répétition a révélé que la mise à jour cassait des extensions tierces, **avant** que la production soit touchée.
 
-### 6. Les déplacements de fichiers sur NFS
+### 6. Sept jours sans journaux de pare-feu
+**Symptôme :** en préparant cette documentation, le tableau de bord Sécurité était vide.
+**Cause :** lors d'une intervention par la console de pfSense, une commande d'arrêt de processus trop large avait aussi arrêté le service de journalisation (`syslogd`).
+Le pare-feu, Snort et pfBlockerNG ont continué à **bloquer** normalement, mais plus rien n'était **journalisé** ni envoyé à Loki pendant 7 jours.
+**Correction :** relance du service, vérification de l'arrivée des journaux, puis ajout d'une vérification systématique après chaque intervention sur pfSense.
+**Leçon :** il faut **superviser la supervision**. L'absence de données est un signal en soi, et doit déclencher une alerte au même titre qu'un pic.
+
+### 7. Les déplacements de fichiers sur NFS
 En renommant un fichier de 4 To entre **deux montages différents du même export NFS**, la commande `mv` a commencé une copie octet par octet au lieu d'un simple renommage.
 **Leçon :** pour le noyau, deux points de montage sont deux systèmes de fichiers. Un renommage doit se faire **à l'intérieur d'un même montage**.
