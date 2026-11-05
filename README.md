@@ -252,6 +252,7 @@ Prochaines étapes : **SIEM**, **SSO**, **accélération GPU (NVENC)**, copie ho
 | [09 — Roadmap](docs/09-roadmap.md) | Ce qui est prévu |
 | [configs/](configs/) | Extraits de configuration **nettoyés** |
 | [scripts/](scripts/) | Scripts d'exploitation commentés |
+| [portfolio/](portfolio/) | Textes, données JSON et page HTML pour le portfolio |
 
 ---
 

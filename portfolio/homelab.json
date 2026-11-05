@@ -1,0 +1,31 @@
+{
+  "titre": "HomeLab — Infrastructure virtualisée et sécurisée sous Proxmox VE",
+  "accroche": "Une infrastructure de type PME sur un seul serveur : pare-feu et IPS, zones réseau, VPN, supervision et sauvegardes vérifiées.",
+  "auteur": "Hugo Loureiro",
+  "depot": "https://github.com/Lightshadow02/HomeLab",
+  "projets_lies": ["https://github.com/Lightshadow02/baszel-snmp-bridge"],
+  "mise_a_jour": "2026-11-05",
+  "chiffres": [
+    {"libelle": "Serveur", "valeur": "Ryzen 9 5900X · 96 Go RAM"},
+    {"libelle": "Invités en service", "valeur": "2 VM + 7 LXC"},
+    {"libelle": "Conteneurs Docker", "valeur": "35+"},
+    {"libelle": "Règles pare-feu", "valeur": "121"},
+    {"libelle": "Domaines bloqués (DNSBL)", "valeur": "≈ 352 000"},
+    {"libelle": "Connexions malveillantes bloquées", "valeur": "≈ 100 000 / jour"},
+    {"libelle": "Stockage réseau", "valeur": "22 To + 11,6 To"}
+  ],
+  "piliers": [
+    {"titre": "Périmètre", "texte": "pfSense virtualisé, refus par défaut, IPS Snort en blocage sur le WAN, pfBlockerNG."},
+    {"titre": "Segmentation", "texte": "Cloud exposé isolé dans sa propre zone, stockage sur une interface physique dédiée."},
+    {"titre": "Accès distant", "texte": "VPN WireGuard ; consoles d'admin jamais exposées (reverse proxy TLS + listes d'accès)."},
+    {"titre": "Supervision", "texte": "Prometheus, Grafana, Loki ; alertes en français sur téléphone."},
+    {"titre": "Sauvegardes", "texte": "Proxmox Backup Server : 2 copies, vérification hebdomadaire, restauration testée."}
+  ],
+  "technologies": ["Proxmox VE", "pfSense", "Snort", "pfBlockerNG", "WireGuard", "Docker", "LXC", "Nginx Proxy Manager",
+                   "Let's Encrypt", "Prometheus", "Grafana", "Loki", "Proxmox Backup Server", "Nextcloud", "Asterisk", "NFS", "Python", "Bash"],
+  "images": [
+    {"url": "https://raw.githubusercontent.com/Lightshadow02/HomeLab/main/assets/grafana-hote.png", "legende": "Supervision de l'hôte Proxmox dans Grafana"},
+    {"url": "https://raw.githubusercontent.com/Lightshadow02/HomeLab/main/assets/grafana-pfblockerng.png", "legende": "pfBlockerNG : IP malveillantes et domaines bloqués (24 h)"},
+    {"url": "https://raw.githubusercontent.com/Lightshadow02/HomeLab/main/assets/pbs-sauvegardes.png", "legende": "Sauvegardes Proxmox Backup Server sur 30 jours"}
+  ]
+}

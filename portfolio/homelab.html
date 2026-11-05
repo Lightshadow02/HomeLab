@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HomeLab Proxmox</title>
+<meta name="description" content="Infrastructure virtualisée et sécurisée sous Proxmox VE : pfSense, Snort, WireGuard, supervision Grafana et sauvegardes PBS.">
+<!-- Page autonome : à intégrer telle quelle ou à reprendre dans le portfolio. Images servies depuis le dépôt GitHub. -->
+<style>
+  :root { --bg:#0f1115; --carte:#171a21; --bord:#262b36; --texte:#e6e8ee; --doux:#9aa3b2; --accent:#e57000; --vert:#2fb344; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--texte); font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  main { max-width:1080px; margin:0 auto; padding:48px 16px 64px; }
+  h1 { font-size:clamp(1.6rem,4vw,2.4rem); line-height:1.2; margin:0 0 12px; }
+  h2 { font-size:1.3rem; margin:48px 0 16px; }
+  .accroche { color:var(--doux); font-size:1.1rem; margin:0 0 24px; max-width:760px; }
+  .liens a { display:inline-block; margin:0 8px 8px 0; padding:8px 14px; border-radius:8px; background:var(--accent); color:#fff; text-decoration:none; font-weight:600; }
+  .liens a.second { background:transparent; border:1px solid var(--bord); color:var(--texte); }
+  .grille { display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); }
+  .chiffre { background:var(--carte); border:1px solid var(--bord); border-radius:10px; padding:14px; }
+  .chiffre b { display:block; font-size:1.25rem; color:var(--texte); }
+  .chiffre span { color:var(--doux); font-size:.85rem; }
+  .piliers { display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); }
+  .pilier { background:var(--carte); border:1px solid var(--bord); border-left:3px solid var(--vert); border-radius:10px; padding:14px 16px; }
+  .pilier h3 { margin:0 0 6px; font-size:1rem; }
+  .pilier p { margin:0; color:var(--doux); font-size:.95rem; }
+  figure { margin:0 0 24px; }
+  figure img { width:100%; height:auto; border-radius:10px; border:1px solid var(--bord); display:block; }
+  figcaption { color:var(--doux); font-size:.9rem; margin-top:6px; }
+  .tags span { display:inline-block; margin:0 6px 8px 0; padding:4px 10px; border-radius:999px; background:var(--carte); border:1px solid var(--bord); font-size:.85rem; }
+  footer { margin-top:48px; color:var(--doux); font-size:.85rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>HomeLab — Infrastructure virtualisée et sécurisée sous Proxmox VE</h1>
+  <p class="accroche">Une infrastructure de type PME sur un seul serveur : pare-feu et IPS, zones réseau, VPN, supervision et sauvegardes vérifiées. Un projet que je fais évoluer chaque année depuis ma première année de BTS.</p>
+  <p class="liens">
+    <a href="https://github.com/Lightshadow02/HomeLab">Voir la documentation sur GitHub</a>
+    <a class="second" href="https://github.com/Lightshadow02/baszel-snmp-bridge">Projet associé : pont SNMP</a>
+  </p>
+
+  <h2>Chiffres clés</h2>
+  <div class="grille">
+    <div class="chiffre"><b>Ryzen 9 · 96 Go</b><span>serveur Proxmox VE</span></div>
+    <div class="chiffre"><b>2 VM + 7 LXC</b><span>invités en service</span></div>
+    <div class="chiffre"><b>35+</b><span>conteneurs Docker</span></div>
+    <div class="chiffre"><b>121</b><span>règles pare-feu</span></div>
+    <div class="chiffre"><b>≈ 352 000</b><span>domaines bloqués</span></div>
+    <div class="chiffre"><b>≈ 100 000 / j</b><span>connexions malveillantes bloquées</span></div>
+  </div>
+
+  <h2>Défense en profondeur</h2>
+  <div class="piliers">
+    <div class="pilier"><h3>Périmètre</h3><p>pfSense virtualisé, refus par défaut, IPS Snort en blocage sur le WAN, pfBlockerNG.</p></div>
+    <div class="pilier"><h3>Segmentation</h3><p>Cloud exposé isolé dans sa propre zone, stockage sur une interface physique dédiée.</p></div>
+    <div class="pilier"><h3>Accès distant</h3><p>VPN WireGuard ; consoles d'administration jamais exposées (reverse proxy TLS + listes d'accès).</p></div>
+    <div class="pilier"><h3>Supervision</h3><p>Prometheus, Grafana et Loki ; alertes rédigées en français, envoyées sur téléphone.</p></div>
+    <div class="pilier"><h3>Sauvegardes</h3><p>Proxmox Backup Server : 2 copies, vérification hebdomadaire, restauration testée.</p></div>
+  </div>
+
+  <h2>En images</h2>
+  <figure>
+    <img src="https://raw.githubusercontent.com/Lightshadow02/HomeLab/main/assets/grafana-hote.png" alt="Tableau de bord Grafana de l'hôte Proxmox : CPU, mémoire, températures, stockages" loading="lazy">
+    <figcaption>Supervision de l'hôte Proxmox dans Grafana (24 h).</figcaption>
+  </figure>
+  <figure>
+    <img src="https://raw.githubusercontent.com/Lightshadow02/HomeLab/main/assets/grafana-pfblockerng.png" alt="Tableau de bord pfBlockerNG : IP et domaines bloqués" loading="lazy">
+    <figcaption>pfBlockerNG : IP malveillantes et domaines bloqués (24 h).</figcaption>
+  </figure>
+  <figure>
+    <img src="https://raw.githubusercontent.com/Lightshadow02/HomeLab/main/assets/pbs-sauvegardes.png" alt="Grille des sauvegardes sur 30 jours" loading="lazy">
+    <figcaption>Sauvegardes Proxmox Backup Server sur 30 jours (une case par jour et par machine).</figcaption>
+  </figure>
+
+  <h2>Technologies</h2>
+  <p class="tags">
+    <span>Proxmox VE</span><span>pfSense</span><span>Snort</span><span>pfBlockerNG</span><span>WireGuard</span><span>Docker</span><span>LXC</span>
+    <span>Nginx Proxy Manager</span><span>Let's Encrypt</span><span>Prometheus</span><span>Grafana</span><span>Loki</span>
+    <span>Proxmox Backup Server</span><span>Nextcloud</span><span>Asterisk</span><span>NFS</span><span>Python</span><span>Bash</span>
+  </p>
+
+  <footer>Hugo Loureiro — ingénieur cybersécurité &amp; réseaux · Documentation complète et configurations nettoyées sur GitHub.</footer>
+</main>
+</body>
+</html>
