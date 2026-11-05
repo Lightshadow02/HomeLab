@@ -4,20 +4,20 @@
 
 ## Évolution du lab
 
-Mon **premier serveur date de ma 1re année de BTS**. Depuis, j'ai fait évoluer la plateforme **à peu près chaque année** :
+Mon **premier serveur date de ma 1re année de BTS, en 2021**. Depuis, j'ai fait évoluer la plateforme **à peu près chaque année** :
 
 ```mermaid
 timeline
-    title Évolution du HomeLab (une étape par an environ)
-    BTS 1re année : Raspberry Pi — premiers services
-    Étape suivante : PC Intel Core i5 — premier « vrai » serveur
-    Étape suivante : Hyper-V — découverte de la virtualisation
-    Étape suivante : Proxmox VE — VM + conteneurs, gratuit et solide
-    Étape suivante : Serveur Ryzen 9 — montée en puissance (24 threads, 96 Go)
-    Aujourd'hui : Docker, Pterodactyl, pfSense, PBS, supervision Grafana
+    title Évolution du HomeLab (années approximatives)
+    2021 : Raspberry Pi — premiers services (1re année de BTS)
+    2022 : PC Intel Core i5 — premier « vrai » serveur
+    2023 : Hyper-V — découverte de la virtualisation
+    2024 : Proxmox VE — VM + conteneurs, gratuit et solide
+    2025 : Serveur Ryzen 9 — montée en puissance (24 threads, 96 Go)
+    2026 : Docker, Pterodactyl, pfSense, PBS, supervision Grafana
 ```
 
-> Les dates précises ne sont pas indiquées. Les grandes étapes, elles, correspondent bien au parcours réel.
+> Les années sont approximatives : environ une étape par an depuis 2021.
 
 ### Évolutions récentes (octobre–novembre 2026)
 

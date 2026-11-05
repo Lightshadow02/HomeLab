@@ -16,7 +16,7 @@ Il réunit un pare-feu pfSense avec IPS Snort et filtrage DNS, des zones réseau
 une supervision Prometheus, Grafana et Loki avec des alertes, et des sauvegardes Proxmox Backup Server vérifiées.
 
 ## Description longue (≈ 180 mots)
-Depuis ma première année de BTS, je fais évoluer chaque année un laboratoire personnel : d'un Raspberry Pi à un serveur Ryzen 9 sous Proxmox VE.
+Depuis ma première année de BTS (2021), je fais évoluer chaque année un laboratoire personnel : d'un Raspberry Pi à un serveur Ryzen 9 sous Proxmox VE.
 Il héberge aujourd'hui des services utilisés au quotidien (cloud privé, visioconférence, serveur multimédia, téléphonie IP), avec une approche **défense en profondeur** :
 
 - **Périmètre** : pfSense virtualisé, refus par défaut, IPS **Snort** en blocage sur le WAN, **pfBlockerNG** (≈ 352 000 domaines malveillants ou publicitaires bloqués).
