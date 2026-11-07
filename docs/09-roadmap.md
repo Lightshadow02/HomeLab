@@ -14,6 +14,7 @@ Légende : 🟢 en production · 🟡 en cours · ⚪ prévu
 | ⚪ | **Alerte sur absence de journaux** | Être prévenu si pfSense cesse d'envoyer ses journaux (leçon de l'incident n°6) |
 | ⚪ | **Syslog RFC 5424** | Horodatage avec fuseau horaire, et suppression des doublons de réception |
 | ⚪ | **Filtrage GeoIP** | Restreindre l'exposition de la téléphonie aux pays attendus (pfBlockerNG) |
+| ⚪ | **Caméras de meilleure qualité** | Remplacer les caméras d'entrée de gamme du NVR par des modèles plus nets, avec un vrai PTZ ONVIF, pour permettre le suivi automatique |
 | 🟡 | **Durcissement continu** | Accès d'administration, mises à jour régulières, revue des comptes |
 
 ## Déjà réalisé (extrait)
@@ -23,3 +24,4 @@ Légende : 🟢 en production · 🟡 en cours · ⚪ prévu
 - 🟢 VPN WireGuard, reverse proxy TLS avec listes d'accès
 - 🟢 Proxmox Backup Server, avec une seconde copie, vérification et restauration testée
 - 🟢 Supervision Prometheus, Grafana et Loki, avec des alertes en français
+- 🟢 NVR Frigate : enregistrement, détection IA et alertes sur téléphone
