@@ -100,6 +100,36 @@ Les données (fichiers) sont sur le Buffalo en NFS, montées par l'hôte.
 Remplace Guacamole : la personne se connecte au VPN, ouvre une URL, et obtient un bureau avec navigateur et client RDP/VNC/SSH.
 Le DNS du conteneur est forcé sur pfSense, pour profiter du filtrage DNSBL et des noms internes.
 
+## 📹 NVR Frigate — vidéosurveillance
+| | |
+|---|---|
+| Rôle | Enregistreur vidéo réseau pour les caméras d'un **site familial distant** : enregistrement continu, détection de personnes et de véhicules, alertes sur téléphone |
+| Hébergement | CT 108 (Docker, Frigate 0.18), enregistrements sur le **NAS de sauvegarde** (NFS) |
+| Exposition | aucune : accès en LAN/VPN derrière le reverse proxy, avec liste d'accès |
+| Accès utilisateurs | compte **lecteur** pour la famille (pas de réglages), compte admin séparé |
+
+**Fonctionnement**
+
+```mermaid
+flowchart LR
+    CAM["Caméra 2 objectifs<br/>(fixe + motorisé)"] -->|"RTSP"| G2["go2rtc<br/>(restream)"]
+    G2 -->|"1080p, copie sans réencodage"| REC["Enregistrement<br/>7 j continu · 30 j alertes"]
+    G2 -->|"analyse 1280×720 · 5 i/s"| DET["Détection d'objets<br/>OpenVINO sur CPU"]
+    DET -->|"personne / voiture<br/>dans la zone d'alerte"| NT["🔔 ntfy<br/>(appli téléphone)"]
+    REC --> NAS[("NAS · NFS")]
+    U["📱 💻 Famille"] -.->|"VPN WireGuard<br/>tunnel partiel"| UI["Interface web<br/>HTTPS"]
+```
+
+- **Une caméra, deux flux** : la caméra a un objectif fixe et un objectif motorisé. Chacun est déclaré comme une caméra à part, pour être enregistré et analysé séparément.
+- **Pas de réencodage** : la vidéo est copiée telle quelle sur le NAS. Seul le son (G.711) est converti en AAC pour être lisible dans le navigateur.
+- **Détection par IA sans GPU** : modèle SSD MobileNet via **OpenVINO**, sur le processeur (environ 7 ms par image).
+- **Zones d'alerte** : les places de parking sont exclues. Une voiture garée est filmée, mais ne déclenche pas d'alerte ; une voiture qui arrive ou repart, si.
+- **Notifications** : un petit service Python lit les alertes de Frigate et les envoie sur **ntfy**. Il regroupe les détections : au plus une notification par type d'objet toutes les 5 minutes, toutes caméras confondues. Les notifications ne contiennent que du texte, aucune image ne passe par un service tiers.
+- **Accès simple pour la famille** : VPN WireGuard en **tunnel partiel**, qui ne transporte que le trafic vers le NVR.
+  - Sur téléphone : VPN à la demande.
+  - Sur PC Windows : tunnel installé en **service Windows** par un script, avec un raccourci sur le bureau. Aucune manipulation au quotidien.
+- **Secrets** : les identifiants des caméras sont dans un fichier `.env` (chmod 600), pas dans la configuration.
+
 ## 💾 Proxmox Backup Server
 Voir [06 — Sauvegardes](06-sauvegardes.md).
 

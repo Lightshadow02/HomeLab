@@ -29,6 +29,7 @@ timeline
 | **pfBlockerNG** : ajout d'un groupe Malware/Phishing | Protection DNS au-delà de la publicité |
 | Correctif d'urgence PHP **répété sur un clone** | Ne jamais tester en production |
 | **wg-easy v14 → v15** | Suivre les versions maintenues |
+| Nouveau **NVR Frigate** (CT 108) | Vidéosurveillance d'un site familial, enregistrement sur NAS, alertes ntfy |
 
 ## Incidents et leçons apprises
 
@@ -66,3 +67,14 @@ Le pare-feu, Snort et pfBlockerNG ont continué à **bloquer** normalement, mais
 ### 7. Les déplacements de fichiers sur NFS
 En renommant un fichier de 4 To entre **deux montages différents du même export NFS**, la commande `mv` a commencé une copie octet par octet au lieu d'un simple renommage.
 **Leçon :** pour le noyau, deux points de montage sont deux systèmes de fichiers. Un renommage doit se faire **à l'intérieur d'un même montage**.
+
+### 8. Le NVR qui ne voyait pas la voiture
+**Symptôme :** un matin, une voiture passée devant la caméra, de nuit et sous la pluie, n'a déclenché aucune alerte.
+**Cause :** la détection tournait sur le flux secondaire de la caméra (448×256). De nuit, avec les phares et les gouttes éclairées par l'infrarouge, une voiture au loin n'y faisait que quelques dizaines de pixels.
+**Correction :** analyse sur le flux principal, réduit à 1280×720. Le processeur suit sans difficulté (moins de 10 % du conteneur), et des zones d'alerte évitent que les voitures garées déclenchent des alertes.
+**Leçon :** vérifier **les images réelles** avant de régler les seuils. La résolution d'analyse compte plus que le modèle.
+
+### 9. Une caméra motorisée qui ne tient pas ses promesses
+La caméra annonce en ONVIF des positions mémorisées et des déplacements précis. En pratique, elle **accepte la commande de retour à une position sans bouger**, et ses mouvements varient fortement d'une commande à l'autre.
+**Ce que j'ai fait :** un outil de recentrage **en boucle fermée**. Il compare l'image à une photo de référence (points caractéristiques ORB, OpenCV) et corrige par petites impulsions jusqu'à retrouver la position d'origine.
+**Leçon :** ne pas croire les capacités qu'un matériel bas de gamme *déclare* : il faut les **tester**, et prévoir un retour à un état connu.

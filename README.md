@@ -51,6 +51,7 @@ flowchart TB
             JF["CT 104 · Jellyfin"]
             DESK["CT 106 · Bureau KDE (navigateur)"]
             PBS["CT 107 · Proxmox Backup Server"]
+            NVR["CT 108 · NVR Frigate<br/>enregistrement · détection IA"]
             VOIP["VM 600 · IPBX Asterisk"]
             ADM["CT 998 · Poste d'admin"]
         end
@@ -76,6 +77,7 @@ flowchart TB
     NPM -.-> JF
     NPM -.-> NC
     PBS ==>|"datastore principal"| NAS2
+    NVR ==>|"enregistrements vidéo"| NAS2
 ```
 
 > Le diagramme est simplifié : la liste complète des flux autorisés est dans la [matrice des flux](#-matrice-des-flux) et dans [docs/03-reseau.md](docs/03-reseau.md).
@@ -94,6 +96,7 @@ flowchart TB
 | 105 | NEXTCLOUD | LXC | Cloud privé, visio (Talk), tableau blanc | Debian | 4 Go / 32 Go + NFS | **OPT1 isolée** | ✅ via NPM + TURN |
 | 106 | BUREAU | LXC | Bureau KDE Plasma accessible par navigateur | Debian | 8 vCPU / 8 Go / 40 Go | LAN | ❌ (LAN/VPN) |
 | 107 | PBS | LXC | Proxmox Backup Server 4.2 | Debian | 8 vCPU / 4 Go / 16 Go | LAN + VLAN70 | ❌ (LAN/VPN) |
+| 108 | NVR | LXC | Vidéosurveillance : enregistrement et détection IA (Frigate) | Debian 13 | 4 vCPU / 4 Go / 16 Go + NFS | LAN | ❌ (LAN/VPN) |
 | 202 | Chronique-ASSO | LXC | Site web associatif *(arrêté)* | Debian | 1 Go / 16 Go | LAN | — |
 | 998 | Claude-code | LXC | Poste d'administration / automatisation | Debian | 4 Go / 32 Go | LAN | ❌ |
 
@@ -196,7 +199,7 @@ Détails : [docs/07-supervision.md](docs/07-supervision.md).
 | | |
 |---|---|
 | Hôte | 1 nœud Proxmox · 24 threads · 96 Go RAM · NVMe 2 To + HDD 2 To |
-| Invités documentés | 2 VM et 7 LXC en service, 1 LXC arrêté |
+| Invités documentés | 2 VM et 8 LXC en service, 1 LXC arrêté |
 | Conteneurs Docker | plus de 35 (hors machines non documentées) |
 | Services publiés | ~21 hôtes virtuels derrière le reverse proxy, dont 14 réservés au LAN/VPN |
 | Règles pare-feu | 121 règles pfSense |
@@ -221,6 +224,7 @@ Détails : [docs/07-supervision.md](docs/07-supervision.md).
 | Gestion de vulnérabilités | Veille CVE, correctifs priorisés, répétition sur clone avant production | SOC / Admin |
 | Automatisation | Scripts Python et Bash (rapports, maintenance, intégrations API) | Admin / DevOps |
 | Téléphonie | IPBX Asterisk (SIP/RTP) | Admin réseau / télécom |
+| Vidéosurveillance | NVR Frigate : flux RTSP, détection d'objets par IA sur CPU, enregistrement sur NAS, notifications | Admin systèmes / sûreté |
 
 ---
 

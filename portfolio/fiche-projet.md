@@ -41,7 +41,7 @@ Le dépôt documente l'architecture, les choix techniques, les incidents rencont
 
 ## Technologies (étiquettes)
 `Proxmox VE` `pfSense` `Snort` `pfBlockerNG` `WireGuard` `Docker` `LXC` `Nginx Proxy Manager` `Let's Encrypt`
-`Prometheus` `Grafana` `Loki` `Proxmox Backup Server` `Nextcloud` `Asterisk` `NFS` `Python` `Bash`
+`Prometheus` `Grafana` `Loki` `Proxmox Backup Server` `Nextcloud` `Asterisk` `Frigate` `OpenVINO` `NFS` `Python` `Bash`
 
 ## Compétences démontrées
 Sécurité réseau · Détection d'intrusion (IPS) · Journalisation centralisée · Virtualisation · Conteneurisation ·
